@@ -1,4 +1,4 @@
-import neo4j
+
 import time
 
 class GraphAnalytics:
@@ -15,19 +15,14 @@ class GraphAnalytics:
 
     def computedegrees(self):
         f = open(self.databaseFile + ".txt", "r")
-        self.vertices, self.edges, self.is_triple = f.readline().strip().split(" ")
+        self.vertices, self.edges = f.readline().strip().split(" ")
         self.vertices = int(self.vertices)
         self.edges = int(self.edges)
-        self.is_triple = int(self.is_triple)
         
         start = time.time()
         for line in f:
             line = line.strip()
-            if self.is_triple == 0:
-                s, o = line.split(" ")
-            else:
-                s, p, o = line.split(" ")
-                p = int(p)
+            s, o = line.split(" ")
 
             s = int(s)
             o = int(o)
@@ -58,6 +53,8 @@ class GraphAnalytics:
         for iter in range(iterations):
             for i in range(self.vertices):
                 sum = 0
+                if i not in self.inedges:
+                    continue
                 for j in range(len(self.inedges[i])):
                     v = self.inedges[i][j]
                     sum += float(pr_old[v]) / self.outdegree[v]
@@ -73,15 +70,15 @@ class GraphAnalytics:
 
 
 def main():
-    graph = GraphAnalytics("sample1")
+    graph = GraphAnalytics("Datasets/FB15K")
     graph.pagerank(iterations=2)
 
     print ("Vertices : ", graph.vertices)
     print ("Edges : ", graph.edges)
-    print ("Indegree : ", graph.indegree)
-    print ("Outdegree : ", graph.outdegree)
-    print ("Incoming edges : ", graph.inedges)
-    print ("PageRank : ", graph.pr)
+    #print ("Indegree : ", graph.indegree)
+    #print ("Outdegree : ", graph.outdegree)
+    #print ("Incoming edges : ", graph.inedges)
+    #print ("PageRank : ", graph.pr)
 if __name__ == '__main__':
     main()
     
