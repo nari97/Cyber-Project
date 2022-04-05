@@ -18,6 +18,10 @@ class Neo4JWrapper:
 
     def importDataset(self, dataset):
 
+        #Dataset is assumed of form
+        #Line 1: n_vertices n_entities
+        #Line 2 onwards: head tail
+
         datasetFile = open("Datasets/" + dataset + ".txt")
 
         vertices, edges = datasetFile.readline().strip().split(" ")
