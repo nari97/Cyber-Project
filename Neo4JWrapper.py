@@ -2,6 +2,7 @@ import neo4j
 import py2neo
 import py2neo.bulk as bulk
 from itertools import islice
+import time
 
 
 class Neo4JWrapper:
@@ -65,7 +66,30 @@ class Neo4JWrapper:
 
         print("Created relationships")
 
+    def pagerank(self, d, N, iterations):
 
-if __name__ == "__main__":
-    neo = Neo4JWrapper("neo4j", "password")
-    neo.importDataset("YAGO")
+        damping = (1.0-d)/N
+        start_pr = (1.0)/N
+        graph = py2neo.Graph(self.uri, auth=(self.username, self.password))
+
+        graph.run("match (e) set e.degree = size((e)-[]->()) return count(e)")
+        graph.run("match (s) set s.o_pr = " + str(start_pr) + " ,s.n_pr = " + str(start_pr) + " return count(s)")
+        print("Set o_pr, n_pr and degree")
+
+        start = time.time()
+        for iter in range(iterations):
+            graph.run("match(o) with o match (s)-[]->(o) with s, o with o as o,(" + str(damping) + " + " + str(d) + "* sum(s.o_pr/s.degree)) as pr_sum set o.n_pr = pr_sum return count(o)")
+            graph.run("match (s) set s.o_pr = s.n_pr return count(s) as s")
+        end = time.time()
+        print("Time taken to calculate neo4j_pagerank (ms): ", (end - start) * 100)
+
+        prs = {}
+        result = graph.run ("match (s) return s.inner_id as id, s.o_pr as pr")
+
+        for row in result:
+            prs[row["id"]] = row["pr"]
+        return prs
+
+#if __name__ == "__main__":
+#    neo = Neo4JWrapper("neo4j", "password")
+#    neo.importDataset("YAGO")

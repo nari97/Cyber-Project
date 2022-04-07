@@ -1,5 +1,6 @@
 
 import time
+from Neo4JWrapper import Neo4JWrapper
 
 class GraphAnalytics:
 
@@ -67,18 +68,27 @@ class GraphAnalytics:
         print ("Time taken pagerank (ms) : ", (end-start)*100)
         self.pr = pr_new
 
+    def pagerank_neo4j(self, iterations = 100, d = 0.85):
+        neo = Neo4JWrapper("neo4j", "password")
+        prs = neo.pagerank(d = d, N = self.vertices, iterations = iterations)
+        print(prs[0])
+        #print (prs)
+
 
 
 def main():
     graph = GraphAnalytics("Datasets/FB15K")
-    graph.pagerank(iterations=2)
-
+    graph.pagerank(iterations=1)
+    #print(graph.pr)
+    graph.pagerank_neo4j(iterations=1)
+    print(graph.pr[0])
     print ("Vertices : ", graph.vertices)
     print ("Edges : ", graph.edges)
     #print ("Indegree : ", graph.indegree)
     #print ("Outdegree : ", graph.outdegree)
     #print ("Incoming edges : ", graph.inedges)
     #print ("PageRank : ", graph.pr)
+
 if __name__ == '__main__':
     main()
     
