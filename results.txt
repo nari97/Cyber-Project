@@ -1,0 +1,61 @@
+FB15K
+
+Serial pagerank
+Time taken pagerank (ms) :  2812.3931884765625
+Pagerank parallel with threads
+Time taken pagerank (ms) :  10921.724319458008
+Pagerank parallel with processes
+Time taken pagerank (ms) :  56279.75177764893
+Pagerank neo4j serial
+Time taken to calculate neo4j_pagerank (ms):  2812.441260757446
+Pagerank neo4j parallel
+Time taken to calculate neo4j_pagerank (ms):  1625.032901763916
+
+YAGO
+
+Serial pagerank
+Time taken pagerank (ms) :  8680.336921691895
+Pagerank parallel with threads
+Time taken pagerank (ms) :  60710.6511592865
+Pagerank parallel with processes
+Time taken pagerank (ms) :  153121.51336669922
+Pagerank neo4j serial
+Time taken to calculate neo4j_pagerank (ms):  8390.592575073242
+Pagerank neo4j parallel
+Time taken to calculate neo4j_pagerank (ms):  6582.615375518799
+
+HM
+
+Serial pagerank
+Time taken pagerank (ms) :  29448.14763069153
+Pagerank parallel with threads
+Time taken pagerank (ms) :  127308.56652259827
+Pagerank parallel with process *
+Pagerank serial neo4j
+Time taken to calculate neo4j_pagerank (ms):  167691.42317771912
+Time taken to calculate neo4j_pagerank_parallel: 246219.1197872162
+
+
+C++/ FB15K/ Serial
+
+time taken : 123.274300
+
+C++/FB15K/Parallel
+
+time taken : 175.176800
+
+C++/ YAGO/ Serial
+
+time taken : 272.016200
+
+C++/ YAGO/ Parallel
+
+time taken : 298.626000
+
+C++/ HM/ Serial
+
+time taken : 20565.829500
+
+C++/ HM/ Parallel
+
+time taken : 20174.569200
